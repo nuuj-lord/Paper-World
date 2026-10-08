@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAPER WORLD</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-black text-white min-h-screen p-6 sm:p-8 flex flex-col justify-between">
+
+  <!-- Top Bar -->
+  <header class="w-full flex items-center justify-between border-b-2 border-white pb-6 mb-8">
+    <div class="flex items-center gap-4">
+      <h1 class="text-4xl sm:text-6xl font-bold tracking-tighter uppercase text-white">
+        PAPER WORLD
+      </h1>
+    </div>
+    <span class="text-xs sm:text-sm font-mono text-neutral-400 uppercase tracking-widest border border-white px-3 py-1">
+      Created by nuuj-lord
+    </span>
+  </header>
+
+  <!-- Main Game Grid -->
+  <main class="w-full max-w-7xl mx-auto flex-grow space-y-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Game Card 1 -->
+      <button onclick="openGame('Examination Day', 'https://via.placeholder.com/800x600?text=Currently+unavailable+:(')" class="group relative flex flex-col justify-between h-64 p-6 border-2 border-white bg-black hover:bg-white text-white hover:text-black transition-all duration-200 text-left">
+        <span class="text-xs font-mono tracking-widest text-neutral-400 group-hover:text-black">01 / GAME</span>
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-bold uppercase leading-none tracking-tight">
+            Examination Day
+          </h2>
+          <p class="text-sm opacity-80 line-clamp-2">Click to launch game</p>
+        </div>
+        <div class="w-full pt-4 border-t border-current flex justify-between items-center text-xs font-bold uppercase">
+          <span>PLAY NOW</span>
+          <span>&rarr;</span>
+        </div>
+      </button>
+
+      <!-- Game Card 2 -->
+      <button onclick="openGame('Beat up ebay scammer simulator', 'https://nuuj-lord.github.io/B.U.E.S.S./')" class="group relative flex flex-col justify-between h-64 p-6 border-2 border-white bg-black hover:bg-white text-white hover:text-black transition-all duration-200 text-left">
+        <span class="text-xs font-mono tracking-widest text-neutral-400 group-hover:text-black">02 / GAME</span>
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-bold uppercase leading-none tracking-tight">
+            Beat up ebay scammer simulator
+          </h2>
+          <p class="text-sm opacity-80 line-clamp-2">Click to launch game</p>
+        </div>
+        <div class="w-full pt-4 border-t border-current flex justify-between items-center text-xs font-bold uppercase">
+          <span>PLAY NOW</span>
+          <span>&rarr;</span>
+        </div>
+      </button>
+
+      <!-- Game Card 3 -->
+      <button onclick="openGame('files 005', 'https://nuuj-lord.github.io/Files-005/')" class="group relative flex flex-col justify-between h-64 p-6 border-2 border-white bg-black hover:bg-white text-white hover:text-black transition-all duration-200 text-left">
+        <span class="text-xs font-mono tracking-widest text-neutral-400 group-hover:text-black">03 / GAME</span>
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-bold uppercase leading-none tracking-tight">
+            files 005
+          </h2>
+          <p class="text-sm opacity-80 line-clamp-2">Click to launch game</p>
+        </div>
+        <div class="w-full pt-4 border-t border-current flex justify-between items-center text-xs font-bold uppercase">
+          <span>PLAY NOW</span>
+          <span>&rarr;</span>
+        </div>
+      </button>
+
+    </div>
+
+    <!-- Hidden Game Player Area -->
+    <section id="game-container" class="hidden space-y-4 pt-6 border-t-2 border-white">
+      <div class="flex justify-between items-center flex-wrap gap-4">
+        <div class="flex items-center gap-4">
+          <h3 id="game-title" class="text-2xl sm:text-4xl font-bold uppercase tracking-wide"></h3>
+          <span class="text-xs font-mono text-neutral-400 uppercase border border-neutral-700 px-2 py-1">
+            [ESC] to exit fullscreen
+          </span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="toggleFullscreen()" class="px-6 py-3 border-2 border-white bg-black text-white font-bold uppercase text-sm hover:bg-white hover:text-black transition-colors">
+            FULLSCREEN
+          </button>
+          <button onclick="closeGame()" class="px-6 py-3 border-2 border-white bg-white text-black font-bold uppercase text-sm hover:bg-black hover:text-white transition-colors">
+            CLOSE GAME
+          </button>
+        </div>
+      </div>
+      <div id="iframe-wrapper" class="w-full h-[600px] border-2 border-white bg-black">
+        <iframe id="game-iframe" class="w-full h-full border-none" src="" allow="fullscreen" allowfullscreen></iframe>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full border-t-2 border-white pt-6 mt-12 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
+    <p class="text-xs font-mono text-neutral-500 uppercase">
+      PAPER WORLD &copy; ON PAPER GAMES
+    </p>
+  </footer>
+
+  <script>
+    function openGame(title, url) {
+      const container = document.getElementById('game-container');
+      const gameTitle = document.getElementById('game-title');
+      const gameIframe = document.getElementById('game-iframe');
+
+      gameTitle.innerText = title;
+      gameIframe.src = url;
+      container.classList.remove('hidden');
+
+      container.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closeGame() {
+      const container = document.getElementById('game-container');
+      const gameIframe = document.getElementById('game-iframe');
+
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      }
+
+      container.classList.add('hidden');
+      gameIframe.src = '';
+    }
+
+    function toggleFullscreen() {
+      const wrapper = document.getElementById('iframe-wrapper');
+      if (!document.fullscreenElement) {
+        if (wrapper.requestFullscreen) {
+          wrapper.requestFullscreen();
+        } else if (wrapper.webkitRequestFullscreen) {
+          wrapper.webkitRequestFullscreen();
+        } else if (wrapper.msRequestFullscreen) {
+          wrapper.msRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Fallback key listener in case browser focus remains on the parent page
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.fullscreenElement) {
+        document.exitFullscreen();
+      }
+    });
+  </script>
+
+</body>
+</html>
